@@ -8,7 +8,7 @@ Set up local environment for Go development: [https://golang.org/doc/install](ht
 
 Clone repo
 
-Optional: run `go install` from this directory's root to install cli program on your path. This will enable to you run `goac` from any directory with prepending with `go run`.
+Optional: run `go install` from your directory's root to install CLI program on your path. This will enable to you run `goac` from any directory without prepending with `go run`.
 
 ## Usage
 
