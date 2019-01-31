@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -29,10 +28,11 @@ func ListBuckets(svc *s3.S3) {
 	fmt.Println(result)
 }
 
-// UploadSong uploads song
+// UploadSong uploads a song from a local file to an S3 bucket
 func UploadSong(svc *s3.S3, bucket string, source string, destination string) error {
 	file, err := os.Open(source)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	defer file.Close()
@@ -44,7 +44,7 @@ func UploadSong(svc *s3.S3, bucket string, source string, destination string) er
 
 	_, err = svc.PutObject(&s3.PutObjectInput{
 		Bucket:               aws.String(bucket),
-		Key:                  aws.String(destination + getSongName(source)),
+		Key:                  aws.String(destination),
 		ACL:                  aws.String("private"),
 		Body:                 bytes.NewReader(buffer),
 		ContentLength:        aws.Int64(size),
@@ -52,16 +52,12 @@ func UploadSong(svc *s3.S3, bucket string, source string, destination string) er
 		ContentDisposition:   aws.String("attachment"),
 		ServerSideEncryption: aws.String("AES256"),
 	})
+
 	return err
 }
 
-func getSongName(source string) string {
-	s := strings.Split(source, "/")
-	return s[len(s)-1]
-}
-
-// UploadAlbum uploads albums
-func UploadAlbum(svc *s3.S3, bucket string, source string, destination string) {
+// UploadDirectory uploads a song from a local file to an S3 bucket
+func UploadDirectory(svc *s3.S3, bucket string, source string, destination string) {
 	walker := make(fileWalk)
 	go func() {
 		if err := filepath.Walk(source, walker.Walk); err != nil {

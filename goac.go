@@ -11,19 +11,46 @@ import (
 )
 
 func main() {
+	var service, command, bucket, source, destination string
+
 	app := cli.NewApp()
 
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:        "service, svc",
+			Value:       "s3",
+			Usage:       "AWS service",
+			Destination: &service,
+		},
+		cli.StringFlag{
+			Name:        "command, c",
+			Usage:       "Options: [list-buckets, upload-song, upload-album, upload-artist]",
+			Destination: &command,
+		},
+		cli.StringFlag{
+			Name:        "bucket, b",
+			Value:       "my-very-first-bucket-yeyeyaya",
+			Usage:       "AWS S3 bucket",
+			Destination: &bucket,
+		},
+		cli.StringFlag{
+			Name:        "source, s",
+			Usage:       "Source of local file, requires absolute path",
+			Destination: &source,
+		},
+		cli.StringFlag{
+			Name:        "destination, d",
+			Usage:       "S3 storage destination of uploaded file or directory",
+			Destination: &destination,
+		},
+	}
+
 	app.Action = func(c *cli.Context) error {
-		if c.NArg() < 2 {
-			log.Println("Must include service and command")
+		if command == "" {
+			log.Println("Must include a command")
 			return nil
 		}
 
-		service := c.Args().Get(0)
-		command := c.Args().Get(1)
-		bucket := c.Args().Get(2)
-		source := c.Args().Get(3)
-		destination := c.Args().Get(4)
 		sess := session.Must(session.NewSession())
 
 		switch service {
@@ -51,9 +78,9 @@ func executeS3(command string, bucket string, source string, destination string,
 	case "upload-song":
 		commands.UploadSong(svc, bucket, source, destination)
 	case "upload-album":
-		commands.UploadAlbum(svc, bucket, source, destination)
+		commands.UploadDirectory(svc, bucket, source, destination)
 	case "upload-artist":
-		commands.UploadAlbum(svc, bucket, source, destination)
+		commands.UploadDirectory(svc, bucket, source, destination)
 	default:
 		log.Println("Invalid command", command)
 	}
