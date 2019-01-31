@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	os.Setenv("AWS_REGION", "us-east-2")
+
 	var service, command, bucket, source, destination string
 
 	app := cli.NewApp()
