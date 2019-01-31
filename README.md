@@ -13,13 +13,17 @@ Optional: run `go install` from this directory's root to install cli program on 
 ## Usage
 
 List Buckets
+
 `go run goac s3 list-buckets`
 
 Upload Song
+
 `go run goac s3 upload-song <source-path> <aws-destination>`
 
 Upload Album
+
 `go run goac s3 upload-album <source-path> <aws-destination>`
 
 Upload Artist
+
 `go run goac s3 upload-artist <source-path> <aws-destination>`
