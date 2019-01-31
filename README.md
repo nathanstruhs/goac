@@ -12,22 +12,36 @@ Optional: run `go install` from your directory's root to install CLI program on 
 
 ## Usage
 
-Get help
+### Get help
 
 `go run goac help`
 
+### Flags
+
+```
+--service value, --svc value   AWS service (default: "s3")
+--command value, -c value      Options: [list-buckets, upload-song, upload-album, upload-artist]
+--bucket value, -b value       AWS S3 bucket (default: "my-very-first-bucket-yeyeyaya")
+--source value, -s value       Source of local file, requires absolute path
+--destination value, -d value  S3 storage destination of uploaded file or directory
+--help, -h                     show help
+--version, -v                  print the version
+```
+
+### Examples
+
 List Buckets
 
-`go run goac s3 list-buckets`
+`go run goac --service s3 --command list-buckets`
 
 Upload Song
 
-`go run goac s3 upload-song <bucket> <source-path> <aws-destination>`
+`go run goac --svc s3 --c upload-song -b <bucket> -s <source-path> -d <aws-destination>`
 
 Upload Album
 
-`go run goac s3 upload-album <bucket> <source-path> <aws-destination>`
+`go run goac --service s3 --command upload-album --bucket <bucket> --source <source-path> --destination <aws-destination>`
 
 Upload Artist
 
-`go run goac s3 upload-artist <bucket> <source-path> <aws-destination>`
+`go run goac --svc s3 -c upload-artist -b <bucket> -s <source-path> -d <aws-destination>`
