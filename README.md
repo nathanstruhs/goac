@@ -12,6 +12,10 @@ Optional: run `go install` from this directory's root to install cli program on 
 
 ## Usage
 
+Get help
+
+`go run goac help`
+
 List Buckets
 
 `go run goac s3 list-buckets`
