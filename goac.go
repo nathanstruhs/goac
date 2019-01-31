@@ -14,6 +14,8 @@ func main() {
 	var service, command, bucket, source, destination string
 
 	app := cli.NewApp()
+	app.Name = "GOAC - Go AWS Cli"
+	app.Usage = "goac [aws-service] [command] (command options...)"
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
