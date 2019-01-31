@@ -18,12 +18,12 @@ List Buckets
 
 Upload Song
 
-`go run goac s3 upload-song <source-path> <aws-destination>`
+`go run goac s3 upload-song <bucket> <source-path> <aws-destination>`
 
 Upload Album
 
-`go run goac s3 upload-album <source-path> <aws-destination>`
+`go run goac s3 upload-album <bucket> <source-path> <aws-destination>`
 
 Upload Artist
 
-`go run goac s3 upload-artist <source-path> <aws-destination>`
+`go run goac s3 upload-artist <bucket> <source-path> <aws-destination>`
