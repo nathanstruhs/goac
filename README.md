@@ -21,7 +21,7 @@ Optional: run `go install` from your directory's root to install CLI program on 
 ```
 --service value, --svc value   AWS service (default: "s3")
 --command value, -c value      Options: [list-buckets, upload-song, upload-album, upload-artist]
---bucket value, -b value       AWS S3 bucket (default: "my-very-first-bucket-yeyeyaya")
+--bucket value, -b value       AWS S3 bucket (default: "struhs-spotify-clone")
 --source value, -s value       Source of local file, requires absolute path
 --destination value, -d value  S3 storage destination of uploaded file or directory
 --help, -h                     show help

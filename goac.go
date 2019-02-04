@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	os.Setenv("AWS_REGION", "us-east-2")
+	os.Setenv("AWS_REGION", "us-east-1")
 
 	var service, command, bucket, source, destination string
 
@@ -33,7 +33,7 @@ func main() {
 		},
 		cli.StringFlag{
 			Name:        "bucket, b",
-			Value:       "my-very-first-bucket-yeyeyaya",
+			Value:       "struhs-spotify-clone",
 			Usage:       "AWS S3 bucket",
 			Destination: &bucket,
 		},
