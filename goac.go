@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/urfave/cli"
 )
@@ -13,7 +14,7 @@ import (
 func main() {
 	os.Setenv("AWS_REGION", "us-east-1")
 
-	var service, command, bucket, source, destination string
+	var service, command, bucket, source, destination, genre string
 
 	app := cli.NewApp()
 	app.Name = "GOAC - Go AWS Cli"
@@ -44,8 +45,13 @@ func main() {
 		},
 		cli.StringFlag{
 			Name:        "destination, d",
-			Usage:       "S3 storage destination of uploaded file or directory",
+			Usage:       "S3 or Dynamo storage destination of uploaded file or directory",
 			Destination: &destination,
+		},
+		cli.StringFlag{
+			Name:        "genre, g",
+			Usage:       "Dynamo hash key",
+			Destination: &genre,
 		},
 	}
 
@@ -60,6 +66,8 @@ func main() {
 		switch service {
 		case "s3":
 			executeS3(command, bucket, source, destination, sess)
+		case "dynamo":
+			executeDynamo(command, genre, destination, sess)
 		default:
 			log.Println("Invalid service")
 		}
@@ -70,6 +78,17 @@ func main() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func executeDynamo(command string, genre string, destination string, sess *session.Session) {
+	svc := dynamodb.New(sess)
+
+	switch command {
+	case "put-item":
+		commands.PutItem(svc, genre, destination)
+	default:
+		log.Println("Invalid Command", command)
 	}
 }
 
