@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -16,11 +17,11 @@ func PutItem(svc *dynamodb.DynamoDB, genre string, destination string) {
 			"genre": {
 				S: aws.String(genre),
 			},
-			"artist_album_song": {
+			"artist/album/song": {
 				S: aws.String(destination),
 			},
-			"s3_location": {
-				S: aws.String(destination),
+			"artist": {
+				S: aws.String(strings.Split(destination, "_")[0]),
 			},
 		},
 		ReturnConsumedCapacity: aws.String("TOTAL"),
